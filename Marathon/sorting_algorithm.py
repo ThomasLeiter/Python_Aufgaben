@@ -61,7 +61,7 @@ def _quick_sort(lst,lo,hi,selector):
     _quick_sort(lst,lo,pivot_idx,selector)
     _quick_sort(lst,pivot_idx+1,hi,selector)
 
-def quick_sort(lst,selector=lambda x: x):
+def quick_sort(lst=list,selector=lambda x: x) -> list:
     """
     Quicksorts lst using a selector function
     Accumulated Runtime O(n*log(n))
@@ -104,7 +104,7 @@ def _merge(lo,hi,selector):
             j += 1
     return lst + lo[i:] + hi[j:]
 
-def merge_sort(lst, selector=lambda x: x):
+def merge_sort(lst:list, selector=lambda x: x) -> list:
     """
     Mergesorts lst using a selector function
     Runtime O(n*log(n))
