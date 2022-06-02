@@ -58,7 +58,7 @@ def read_file_and_print_winners(filename,sorting_function):
                 best_female = r
                 break
         print(f"GesamtsiegerIn: {winner}")
-        print(f"Sieger Herren: {best_male}")
+        print(f"Sieger Herren:  {best_male}")
         print(f"Siegerin Damen: {best_female}")
 
 if __name__ == '__main__':
