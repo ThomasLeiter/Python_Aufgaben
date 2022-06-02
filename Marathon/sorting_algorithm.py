@@ -71,6 +71,22 @@ def quick_sort(lst,selector=lambda x: x):
     Space Overhead O(log(n)) since in place
     The sorting algorithm is unstable i.e. does
     NOT preserve relative indeces of equal elements.
+
+    Parameters:
+    -----------
+    lst : list
+        The list that is to be sorted.
+    selector: T -> C, optional
+        A selector function that returns a comparable 
+        object of type C when applied to list element
+        of type e
+        e.g. lambda t: t[1] to do pairwise comparison 
+        on the second element of tuple t
+
+    Returns:
+    --------
+    list
+        The sorted list
     """
     _quick_sort(lst,0,len(lst),selector)
     return lst
@@ -95,6 +111,22 @@ def merge_sort(lst, selector=lambda x: x):
     Space Overhead O(n) since out of place
     The sorting algorithm is stable i.e. preserves 
     relative indeces of equal elements.
+
+    Parameters:
+    -----------
+    lst : list
+        The list that is to be sorted.
+    selector: T -> C, optional
+        A selector function that returns a comparable 
+        object of type C when applied to list element
+        of type e
+        e.g. lambda t: t[1] to do pairwise comparison 
+        on the second element of tuple t
+
+    Returns:
+    --------
+    list
+        A sorted copy of the list
     """
     if len(lst) <= 1:
         return lst
