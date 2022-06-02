@@ -1,68 +1,53 @@
 import csv
+from sorting_algorithm import merge_sort,quick_sort
+class MarathonRunner:
 
-##########################################################
-# Merges two lists lo,hi using the comparator function leq
-def merge(lo,hi,leq):
-    lst = []
-    i,j = 0,0
-    while i < len(lo) and j < len(hi):
-        if leq(lo[i],hi[j]):
-            lst.append(lo[i])
-            i += 1
-        else:
-            lst.append(hi[j])
-            j += 1
-    return lst + lo[i:] + hi[j:]
+    def __init__(self,Dict):
+        self.Id = Dict['Start NR']
+        self.FirstName = Dict['Vorname']
+        self.LastName = Dict['Name']
+        self.Time = Dict['Zeit']
+        self.Sex = Dict['Geschlecht']
+    
+    def get_time_seconds(self):
+        time_tpl = self.Time.split(':')
+        return int(time_tpl[0])*3600 + int(time_tpl[1])*60 + int(time_tpl[2])
 
-##################################################
-# Mergesorts lst using the comparator function leq
-# Runtime O(n*log(n))
-# Space Overhead O(n) since out of place
-# The sorting algorithm is stable i.e. preserves 
-# relative index of equal elements.
-def merge_sort(lst, leq):
-    if len(lst) <= 1:
-        return lst
-    return merge(
-        merge_sort(lst[:len(lst)//2],leq),
-        merge_sort(lst[len(lst)//2:],leq),
-        leq)
+    def __le__(self,other):
+        return self.get_time_seconds() <= other.get_time_seconds()
 
-#################################################
-# Return the time in seconds from a given csv-row
-def get_time(row):
-    time_str = row['Zeit']
-    time_tpl = time_str.split(':')
-    return int(time_tpl[0])*3600 + int(time_tpl[1])*60 + int(time_tpl[2])
+    def __gt__(self,other):
+        return not self<=other
 
-###################################################################
-# Find the first element in a sorted list that meets the predicate.
-# Returns None if no such element is present
-def best_in_subset(sorted_lst,predicate):
-    i = 0
-    while i < len(sorted_lst) and not predicate(sorted_lst[i]):
-        i += 1
-    if i < len(sorted_lst):
-        return sorted_lst[i]
-    return None
+    def __str__(self):
+        return f"{self.FirstName} {self.LastName}"
+    
+    def __repr__(self):
+        return f"{self.Id},{self.LastName},{self.FirstName},{self.Time}"
 
 ####################################################
 # Read given csv file and print winners of the race.
-def read_file_and_print_winners(filename):
+def read_file_and_print_winners(filename,sorting_function):
     with open(filename,'r',encoding="utf8") as file:
         data = csv.DictReader(file,delimiter=';')
-        lst = list(data)
-        sorted_lst = merge_sort(
-            lst,
-            lambda a,b: get_time(a)<=get_time(b))
-        winner = best_in_subset(sorted_lst,lambda r: True)
-        best_male = best_in_subset(sorted_lst,lambda r: r['Geschlecht']=='m')
-        best_female = best_in_subset(sorted_lst,lambda r: r['Geschlecht']=='w')
-        print(f"GesamtsiegerIn: {winner['Vorname']} {winner['Name']}")
-        print(f"Sieger Herren: {best_male['Vorname']} {best_male['Name']}")
-        print(f"Siegerin Damen: {best_female['Vorname']} {best_female['Name']}")
+        lst = [MarathonRunner(row) for row in data]
+        sorted_lst = sorting_function(lst)
+        winner = sorted_lst[0]
+        best_male,best_female = None,None
+        for r in sorted_lst:
+            if r.Sex=='m':
+                best_male = r
+                break
+        for r in sorted_lst:
+            if r.Sex=='w':
+                best_female = r
+                break
+        print(f"GesamtsiegerIn: {winner}")
+        print(f"Sieger Herren: {best_male}")
+        print(f"Siegerin Damen: {best_female}")
 
 ##############
 # Main program
 if __name__ == '__main__':
-    read_file_and_print_winners('./Marathon/marathon.csv')
+    read_file_and_print_winners('./Marathon/marathon.csv',merge_sort)
+    read_file_and_print_winners('./Marathon/marathon.csv',quick_sort)
