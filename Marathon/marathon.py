@@ -9,12 +9,9 @@ class MarathonRunner:
         self.LastName = Dict['Name']
         self.Time = time.strptime(Dict['Zeit'],"%H:%M:%S")
         self.Sex = Dict['Geschlecht']
-    
-    def get_time_seconds(self):
-        return self.Time
 
     def __le__(self,other):
-        return self.get_time_seconds() <= other.get_time_seconds()
+        return self.Time <= other.Time
 
     def __gt__(self,other):
         return not self<=other
