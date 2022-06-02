@@ -1,26 +1,32 @@
-# Swaps elements at i and j
 def _swap(lst,i,j):
+    """Swaps elements at i and j"""
     t = lst[i]
     lst[i] = lst[j]
     lst[j] = t
 
-# Helper function for insertion_sort
-# Inserts element at lst[hi] 
-# into slice lst[lo:hi]
 def _insert_into(lst,lo,hi,selector):
+    """
+    Helper function for insertion_sort
+    Inserts element at lst[hi] 
+    into slice lst[lo:hi]
+    """
     while hi > lo and selector(lst[hi]) < selector(lst[hi-1]):
         _swap(lst,hi-1,hi)
         hi -= 1
 
-# In place implementation of 
-# insertion sort algorithm.
 def _insertion_sort(lst,lo,hi,selector):
+    """
+    In place implementation of 
+    insertion sort algorithm.
+    """
     for i in range(lo+1,hi):
         _insert_into(lst,lo,i,selector)
 
-# In place partition algorithm using
-# the Hoarse partitioning scheme
 def _partition(lst,lo,hi,selector,pivot):
+    """
+    In place partition algorithm using
+    the Hoarse partitioning scheme.
+    """
     i,j = lo-1,hi
     while True:
         while True: # Do while loop simulated
@@ -35,14 +41,16 @@ def _partition(lst,lo,hi,selector,pivot):
             return j
         _swap(lst,i,j)
 
-# Calculates the median of a small list
-# or tuple using insertion_sort.
 def _median(small_lst,selector):
+    """
+    Calculates the median of a small list
+    using insertion_sort.
+    """
     _insertion_sort(small_lst,0,len(small_lst),selector)
     return small_lst[len(small_lst)//2]
 
-# Quicksort implementation using a selector function
 def _quick_sort(lst,lo,hi,selector):
+    """Quicksort implementation using a selector function"""
     if hi-lo <= 1:
         return
     if hi-lo <= 7:
@@ -53,22 +61,22 @@ def _quick_sort(lst,lo,hi,selector):
     _quick_sort(lst,lo,pivot_idx,selector)
     _quick_sort(lst,pivot_idx+1,hi,selector)
 
-############################################
-# Quicksorts lst using the selector function
-# Accumulated Runtime O(n*log(n))
-# Worst-Case Runtime O(n**2) for specially 
-# constructed data. Could be avoided by 
-# using median_of_medians pivot selection.
-# Space Overhead O(log(n)) since in place
-# The sorting algorithm is unstable i.e. does
-# NOT preserve relative indeces of equal elements.
 def quick_sort(lst,selector=lambda x: x):
+    """
+    Quicksorts lst using a selector function
+    Accumulated Runtime O(n*log(n))
+    Worst-Case Runtime O(n**2) for specially 
+    constructed data. Could be avoided by 
+    using median_of_medians pivot selection.
+    Space Overhead O(log(n)) since in place
+    The sorting algorithm is unstable i.e. does
+    NOT preserve relative indeces of equal elements.
+    """
     _quick_sort(lst,0,len(lst),selector)
     return lst
 
-####################################################
-# Merges two lists lo,hi using the selector function
 def _merge(lo,hi,selector):
+    """Merges two lists lo,hi using a selector function"""
     lst = []
     i,j = 0,0
     while i < len(lo) and j < len(hi):
@@ -80,13 +88,14 @@ def _merge(lo,hi,selector):
             j += 1
     return lst + lo[i:] + hi[j:]
 
-############################################
-# Mergesorts lst using the selector function
-# Runtime O(n*log(n))
-# Space Overhead O(n) since out of place
-# The sorting algorithm is stable i.e. preserves 
-# relative indeces of equal elements.
 def merge_sort(lst, selector=lambda x: x):
+    """
+    Mergesorts lst using a selector function
+    Runtime O(n*log(n))
+    Space Overhead O(n) since out of place
+    The sorting algorithm is stable i.e. preserves 
+    relative indeces of equal elements.
+    """
     if len(lst) <= 1:
         return lst
     return _merge(
