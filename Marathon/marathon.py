@@ -60,8 +60,12 @@ def read_file_and_print_winners(filename,sorting_function):
         print(f"GesamtsiegerIn: {winner}")
         print(f"Sieger Herren:  {best_male}")
         print(f"Siegerin Damen: {best_female}")
+        print("LäuferInnen mit Laufzeit zwischen 2,5 und 3 Stunden:")
+        for r in sorted_lst:
+            if r.get_time_seconds()>=9000 and r.get_time_seconds()<=10800:
+                print(f" {r.__repr__()}")
 
 if __name__ == '__main__':
     # Read the file 'marathon.csv' and process its contents
     read_file_and_print_winners('./Marathon/marathon.csv',merge_sort)
-    read_file_and_print_winners('./Marathon/marathon.csv',quick_sort)
+    #read_file_and_print_winners('./Marathon/marathon.csv',quick_sort)
