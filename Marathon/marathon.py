@@ -1,4 +1,4 @@
-import csv
+import csv, time
 from sorting_algorithm import merge_sort,quick_sort
 class MarathonRunner:
     """A class to store the data of each marathon runner."""
@@ -7,13 +7,11 @@ class MarathonRunner:
         self.Id = Dict['Start NR']
         self.FirstName = Dict['Vorname']
         self.LastName = Dict['Name']
-        self.Time = Dict['Zeit']
+        self.Time = time.strptime(Dict['Zeit'],"%H:%M:%S")
         self.Sex = Dict['Geschlecht']
     
     def get_time_seconds(self):
-        """Calculates and returns the running time in full seconds."""
-        time_tpl = self.Time.split(':')
-        return int(time_tpl[0])*3600 + int(time_tpl[1])*60 + int(time_tpl[2])
+        return self.Time
 
     def __le__(self,other):
         return self.get_time_seconds() <= other.get_time_seconds()
@@ -34,7 +32,7 @@ class MarathonRunner:
         return f"{self.FirstName} {self.LastName}"
     
     def __repr__(self):
-        return f"{self.Id},{self.LastName},{self.FirstName},{self.Time}"
+        return f"{self.Id},{self.LastName},{self.FirstName},{time.strftime('%H:%M:%S',self.Time)}"
 
 def read_file_and_print_winners(filename,sorting_function):
     """
@@ -62,7 +60,7 @@ def read_file_and_print_winners(filename,sorting_function):
         print(f"Siegerin Damen: {best_female}")
         print("LäuferInnen mit Laufzeit zwischen 2,5 und 3 Stunden:")
         for r in sorted_lst:
-            if r.get_time_seconds()>=9000 and r.get_time_seconds()<=10800:
+            if r.Time>=time.strptime("2:30","%H:%M") and r.Time<=time.strptime("3:00","%H:%M"):
                 print(f" {r.__repr__()}")
 
 if __name__ == '__main__':
