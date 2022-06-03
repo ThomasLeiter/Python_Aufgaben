@@ -224,9 +224,6 @@ def heap_sort(lst,key=lambda x: x):
         _repair_root(lst,0,hi,key) # Repair root of heap
     return lst
 
-from random import randint
-from time import time_ns
-
 if __name__ == "__main__":
     for f in [insertion_sort,merge_sort,quick_sort,heap_sort]:
         lst = [3,1,4,2,7,1,5]
