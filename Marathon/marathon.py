@@ -1,5 +1,5 @@
 import csv, time
-from sorting_algorithm import merge_sort,quick_sort
+from sorting_algorithm import merge_sort,quick_sort,heap_sort
 class MarathonRunner:
     """A class to store the data of each marathon runner."""
 
@@ -63,4 +63,5 @@ def read_file_and_print_winners(filename,sorting_function):
 if __name__ == '__main__':
     # Read the file 'marathon.csv' and process its contents
     #read_file_and_print_winners('marathon.csv',merge_sort)
-    read_file_and_print_winners('marathon.csv',quick_sort)    
+    #read_file_and_print_winners('marathon.csv',quick_sort)    
+    read_file_and_print_winners('marathon.csv',heap_sort)    

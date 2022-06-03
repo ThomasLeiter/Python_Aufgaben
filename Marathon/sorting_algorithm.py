@@ -133,3 +133,77 @@ def merge_sort(lst:list, key=lambda x: x) -> list:
     lo = merge_sort(lst[:len(lst)//2],key)
     hi = merge_sort(lst[len(lst)//2:],key)
     return _merge(lo,hi,key)
+
+def _repair_tail(lst,i,key):
+    """
+    Repair heapstructure from tail to head.
+    """
+    if i == 0:
+        return
+    if key(lst[i]) > key(lst[i//2]):
+        _swap(lst,i,i//2)
+        _repair_tail(lst,i//2,key)
+
+def _heapify(lst,key):
+    """
+    Turn lst in place into
+    a decending binary heap 
+    with maximum at head.
+    """
+    for i in range(len(lst)-1,0,-1):
+        _repair_tail(lst,i,key)
+
+def _repair_root(lst,i,hi,key):
+    """
+    Repair heapstructure from head to hi.
+    """
+    if 2*i+1>=hi:
+        return
+    if 2*i+2>=hi:
+        if key(lst[i])<key(lst[2*i+1]):
+            _swap(lst,i,2*i)
+        return
+    if key(lst[2*i+1])>=key(lst[2*i+2]) and key(lst[i])<key(lst[2*i+1]):
+        _swap(lst,i,2*i+1)
+        _repair_root(lst,2*i+1,hi,key)
+        return
+    if key(lst[2*i+1])<key(lst[2*i+2]) and key(lst[i])<key(lst[2*i+2]):
+        _swap(lst,i,2*i+2)
+        _repair_root(lst,2*i+2,hi,key)
+        return
+
+def heap_sort(lst,key=lambda x: x):
+    """
+    Heapsorts lst using a key function
+    Worst-Case Runtime O(n*log(n)) 
+    Space Overhead O(log(n)) since in place
+    The sorting algorithm is unstable i.e. does
+    NOT preserve relative indeces of equal elements.
+
+    Parameters:
+    -----------
+    lst : list
+        The list that is to be sorted.
+    key: T -> C, optional
+        A key function that returns a comparable 
+        object of type C when applied to list element
+        of type T
+        e.g. lambda t: t[1] to do pairwise comparison 
+        on the second element of tuple t
+
+    Returns:
+    --------
+    list
+        The sorted list
+    """
+    _heapify(lst,key)                 # Build descending heap structure.
+    for hi in range(len(lst)-1,0,-1):
+        _swap(lst,0,hi)               # Swap maximum to end of list
+        _repair_root(lst,0,hi,key) # Repair root of heap
+    return lst
+
+
+if __name__ == "__main__":
+    for f in [merge_sort,quick_sort,heap_sort]:
+        lst = [3,1,4,2,7,1,5]
+        print(f"{f.__name__} {f(lst)}")
