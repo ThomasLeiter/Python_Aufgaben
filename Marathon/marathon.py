@@ -58,7 +58,7 @@ def read_file_and_print_winners(filename,sorting_function):
         print("LäuferInnen mit Laufzeit zwischen 2,5 und 3 Stunden:")
         for r in sorted_lst:
             if r.Time>=time.strptime("2:30","%H:%M") and r.Time<=time.strptime("3:00","%H:%M"):
-                print(f" {r.__repr__()}")
+                print(f" {r.Id:>4s} {r.FirstName:15s} {r.LastName:15s} {time.strftime('%H:%M:%S',r.Time)}")
 
 if __name__ == '__main__':
     # Read the file 'marathon.csv' and process its contents
