@@ -159,6 +159,8 @@ def merge_sort(lst:list, key=lambda x: x) -> list:
 def _repair_tail(lst,i,key):
     """
     Repair heapstructure from tail to head.
+    Restore Invariant lst[i] <= lst[i//2]
+    i.e. child <= parent
     """
     if i == 0:
         return
@@ -178,17 +180,21 @@ def _heapify(lst,key):
 def _repair_root(lst,i,hi,key):
     """
     Repair heapstructure from head to hi.
+    Restore Invariant: lst[i] >= max(lst[2*i+1],lst[2*i+2])
+    i.e. parent >= child
     """
-    if 2*i+1>=hi:
+    if 2*i+1>=hi: # Node i has no children
         return
-    if 2*i+2>=hi:
+    if 2*i+2>=hi: # Only left child existent
         if key(lst[i])<key(lst[2*i+1]):
             _swap(lst,i,2*i)
         return
+    # If left child is biggest, make root and go left
     if key(lst[2*i+1])>=key(lst[2*i+2]) and key(lst[i])<key(lst[2*i+1]):
         _swap(lst,i,2*i+1)
         _repair_root(lst,2*i+1,hi,key)
         return
+    # If right child is biggest, make root and go right
     if key(lst[2*i+1])<key(lst[2*i+2]) and key(lst[i])<key(lst[2*i+2]):
         _swap(lst,i,2*i+2)
         _repair_root(lst,2*i+2,hi,key)
@@ -221,7 +227,7 @@ def heap_sort(lst,key=lambda x: x):
     _heapify(lst,key)                 # Build descending heap structure.
     for hi in range(len(lst)-1,0,-1):
         _swap(lst,0,hi)               # Swap maximum to end of list
-        _repair_root(lst,0,hi,key) # Repair root of heap
+        _repair_root(lst,0,hi,key) # Restore the heap condition
     return lst
 
 if __name__ == "__main__":
