@@ -54,15 +54,8 @@ def read_file_and_print_winners(filename,sorting_function):
         # Find Winner
         winner = sorted_lst[0]
         # Find best Male and Female
-        best_m,best_w = None,None
-        for r in sorted_lst:
-            if r.Sex=='m':
-                best_m = r
-                break
-        for r in sorted_lst:
-            if r.Sex=='w':
-                best_w = r
-                break
+        best_m = [r for r in sorted_lst if r.Sex == 'm'][0]
+        best_w = [r for r in sorted_lst if r.Sex == 'w'][0]
         print(f"GesamtsiegerIn: {winner}")
         print(f"Sieger Herren:  {best_m}")
         print(f"Siegerin Damen: {best_w}")
