@@ -43,18 +43,18 @@ def read_file_and_print_winners(filename,sorting_function):
         # Find Winner
         winner = sorted_lst[0]
         # Find best Male and Female
-        best_male,best_female = None,None
+        best_m,best_w = None,None
         for r in sorted_lst:
             if r.Sex=='m':
-                best_male = r
+                best_m = r
                 break
         for r in sorted_lst:
             if r.Sex=='w':
-                best_female = r
+                best_w = r
                 break
         print(f"GesamtsiegerIn: {winner}")
-        print(f"Sieger Herren:  {best_male}")
-        print(f"Siegerin Damen: {best_female}")
+        print(f"Sieger Herren:  {best_m}")
+        print(f"Siegerin Damen: {best_w}")
         print("LäuferInnen mit Laufzeit zwischen 2,5 und 3 Stunden:")
         for r in sorted_lst:
             if r.Time>=time.strptime("2:30","%H:%M") and r.Time<=time.strptime("3:00","%H:%M"):
