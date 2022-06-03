@@ -201,7 +201,7 @@ def _repair_root(lst,i,hi,key):
         _repair_root(lst,2*i+2,hi,key)
         return
 
-def heap_sort(lst,key=lambda x: x):
+def heap_sort(lst:list,key=lambda x: x) -> list:
     """
     Heapsorts lst using a key function
     Worst-Case Runtime O(n*log(n)) 
