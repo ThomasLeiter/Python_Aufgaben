@@ -130,7 +130,6 @@ def merge_sort(lst:list, key=lambda x: x) -> list:
     """
     if len(lst) <= 1:
         return lst
-    return _merge(
-        merge_sort(lst[:len(lst)//2],key),
-        merge_sort(lst[len(lst)//2:],key),
-        key)
+    lo = merge_sort(lst[:len(lst)//2],key)
+    hi = merge_sort(lst[len(lst)//2:],key)
+    return _merge(lo,hi,key)
