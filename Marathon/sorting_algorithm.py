@@ -4,23 +4,42 @@ def _swap(lst,i,j):
     lst[i] = lst[j]
     lst[j] = t
 
-def _insert_into(lst,lo,hi,key):
+def _insert_into(lst,hi,key):
     """
     Helper function for insertion_sort
     Inserts element at lst[hi] 
-    into slice lst[lo:hi]
+    into slice lst[:hi]
     """
-    while hi > lo and key(lst[hi]) < key(lst[hi-1]):
+    while hi > 0 and key(lst[hi]) < key(lst[hi-1]):
         _swap(lst,hi-1,hi)
         hi -= 1
 
-def _insertion_sort(lst,lo,hi,key):
+def insertion_sort(lst,key=lambda x: x):
     """
     In place implementation of 
     insertion sort algorithm.
+    Runtime in O(n**2)
+    No Space overhead
+
+    Parameters:
+    -----------
+    lst : list
+        The list that is to be sorted.
+    key: T -> C, optional
+        A key function that returns a comparable 
+        object of type C when applied to list element
+        of type T
+        e.g. lambda t: t[1] to do pairwise comparison 
+        on the second element of tuple t
+
+    Returns:
+    --------
+    list
+        The sorted list
     """
-    for i in range(lo+1,hi):
-        _insert_into(lst,lo,i,key)
+    for i in range(len(lst)):
+        _insert_into(lst,i,key)
+    return lst
 
 def _partition(lst,lo,hi,key,pivot):
     """
@@ -47,15 +66,12 @@ def _median(small_lst,key):
     Calculates the median of a small list
     using insertion_sort.
     """
-    _insertion_sort(small_lst,0,len(small_lst),key)
+    insertion_sort(small_lst,key)
     return small_lst[len(small_lst)//2]
 
 def _quick_sort(lst,lo,hi,key):
     """Quicksort implementation using a key function"""
     if hi-lo <= 1:
-        return
-    if hi-lo <= 7:
-        _insertion_sort(lst,lo,hi,key)
         return
     # Find pivot element as median of head, tail and center
     pivot = _median([lst[lo],lst[(lo+hi-1)//2],lst[hi-1]],key)
@@ -208,8 +224,10 @@ def heap_sort(lst,key=lambda x: x):
         _repair_root(lst,0,hi,key) # Repair root of heap
     return lst
 
+from random import randint
+from time import time_ns
 
 if __name__ == "__main__":
-    for f in [merge_sort,quick_sort,heap_sort]:
+    for f in [insertion_sort,merge_sort,quick_sort,heap_sort]:
         lst = [3,1,4,2,7,1,5]
         print(f"{f.__name__} {f(lst)}")
