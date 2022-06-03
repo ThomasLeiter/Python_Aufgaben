@@ -79,7 +79,7 @@ def quick_sort(lst=list,key=lambda x: x) -> list:
     key: T -> C, optional
         A key function that returns a comparable 
         object of type C when applied to list element
-        of type e
+        of type T
         e.g. lambda t: t[1] to do pairwise comparison 
         on the second element of tuple t
 
@@ -119,7 +119,7 @@ def merge_sort(lst:list, key=lambda x: x) -> list:
     key: T -> C, optional
         A key function that returns a comparable 
         object of type C when applied to list element
-        of type e
+        of type T
         e.g. lambda t: t[1] to do pairwise comparison 
         on the second element of tuple t
 
