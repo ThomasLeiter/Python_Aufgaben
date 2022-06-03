@@ -164,8 +164,9 @@ def _repair_tail(lst,i,key):
     """
     if i == 0:
         return
-    if key(lst[i]) > key(lst[i//2]):
-        _swap(lst,i,i//2)
+    # If Child is bigger than parent, swap and recurse
+    if key(lst[i]) > key(lst[i//2]): 
+        _swap(lst,i,i//2) 
         _repair_tail(lst,i//2,key)
 
 def _heapify(lst,key):
