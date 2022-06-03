@@ -25,7 +25,8 @@ def _insertion_sort(lst,lo,hi,key):
 def _partition(lst,lo,hi,key,pivot):
     """
     In place partition algorithm using
-    the Hoarse partitioning scheme.
+    the Hoarse partitioning scheme. 
+    (see wikipedia for further deatils)
     """
     i,j = lo-1,hi
     while True:
@@ -56,7 +57,9 @@ def _quick_sort(lst,lo,hi,key):
     if hi-lo <= 7:
         _insertion_sort(lst,lo,hi,key)
         return
+    # Find pivot element as median of head, tail and center
     pivot = _median([lst[lo],lst[(lo+hi-1)//2],lst[hi-1]],key)
+    # Partition and obtain index of the pivot element
     pivot_idx = _partition(lst,lo,hi,key,pivot)
     _quick_sort(lst,lo,pivot_idx,key)
     _quick_sort(lst,pivot_idx+1,hi,key)
@@ -95,6 +98,7 @@ def _merge(lo,hi,key):
     """Merges two lists lo,hi using a key function"""
     lst = []
     i,j = 0,0
+    # Merge iteration
     while i < len(lo) and j < len(hi):
         if key(lo[i])<=key(hi[j]):
             lst.append(lo[i])
@@ -102,6 +106,8 @@ def _merge(lo,hi,key):
         else:
             lst.append(hi[j])
             j += 1
+    # Append remaining tail to merged list.
+    # One tail is always empty.
     return lst + lo[i:] + hi[j:]
 
 def merge_sort(lst:list, key=lambda x: x) -> list:
