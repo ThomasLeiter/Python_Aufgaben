@@ -3,7 +3,18 @@ from sorting_algorithm import merge_sort,quick_sort,heap_sort
 class MarathonRunner:
     """A class to store the data of each marathon runner."""
 
-    def __init__(self,Dict):
+    def __init__(self,Dict:dict):
+        """
+        Construct a MarathonRunner object.
+
+        Parameters:
+        -----------
+        Dict : dict
+            Dictionary with keys 
+            'Start NR', 
+            'Vorname', 'Name',
+            'Geschlecht', 'Zeit'
+        """
         self.Id = Dict['Start NR']
         self.FirstName = Dict['Vorname']
         self.LastName = Dict['Name']
