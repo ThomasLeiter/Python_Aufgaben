@@ -14,7 +14,7 @@ def _insert_into(lst,hi,key):
         _swap(lst,hi-1,hi)
         hi -= 1
 
-def insertion_sort(lst,key=lambda x: x):
+def insertion_sort(lst:list,key=lambda x: x) -> list:
     """
     In place implementation of 
     insertion sort algorithm.
