@@ -16,10 +16,10 @@ def _insert_into(lst,hi,key):
 
 def insertion_sort(lst:list,key=lambda x: x) -> list:
     """
-    In place implementation of 
-    insertion sort algorithm.
-    Runtime in O(n**2)
-    No Space overhead
+    In place implementation of insertion sort algorithm.
+    Runtime in O(n**2). There is no Space overhead.
+    The sorting algorithm is stable i.e. preserves 
+    relative indeces of equal elements.
 
     Parameters:
     -----------
