@@ -47,6 +47,10 @@ def test_stable(sorting_function):
     shuffle(lst)
     lst = list(zip(lst,range(N)))
     lst = sorting_function(lst,key=lambda p: p[0])
+    for i in range(N-1):
+        if not lst[i][0] <= lst[i+1][0]:
+            print(f"Sorting FAILED! {lst}")
+            return False
     return all(lst[i] <= lst[i+1] for i in range(N-1))
 
 if __name__ == '__main__':

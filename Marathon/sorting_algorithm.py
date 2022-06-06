@@ -159,15 +159,15 @@ def merge_sort(lst:list, key=lambda x: x) -> list:
 def _repair_tail(lst,i,key):
     """
     Repair heapstructure from tail to head.
-    Restore Invariant lst[i] <= lst[i//2]
-    i.e. child <= parent
+    Restore Invariant lst[i] >= lst[(i-1)//2]
+    i.e. child >= parent
     """
     if i == 0:
         return
     # If Child is bigger than parent, swap and recurse
-    if key(lst[i]) > key(lst[i//2]): 
-        _swap(lst,i,i//2) 
-        _repair_tail(lst,i//2,key)
+    if key(lst[i]) > key(lst[(i-1)//2]): 
+        _swap(lst,i,(i-1)//2) 
+        _repair_tail(lst,(i-1)//2,key)
 
 def _heapify(lst,key):
     """
@@ -175,7 +175,7 @@ def _heapify(lst,key):
     a decending binary heap 
     with maximum at head.
     """
-    for i in range(len(lst)-1,0,-1):
+    for i in range(1,len(lst)):
         _repair_tail(lst,i,key)
 
 def _repair_root(lst,i,hi,key):
